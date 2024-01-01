@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import ExpenseModal from "./_components/ExpanseModel";
+import ExpanseList from "./_components/ExpanseList";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,6 +25,7 @@ export default function Home() {
       </button>
 
       {isModalOpen && <ExpenseModal onClose={closeModal} />}
+      <ExpanseList />
     </div>
   );
 }

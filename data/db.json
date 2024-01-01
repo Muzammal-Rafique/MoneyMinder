@@ -1,0 +1,58 @@
+{
+  "expenses": [
+    {
+      "id": 1,
+      "title": "Groceries",
+      "amount": 50,
+      "paymentMethod": "Credit Card",
+      "category": "Food",
+      "description": "Weekly grocery shopping",
+      "createdAt": "2023-05-01T12:30:00.000Z"
+    },
+    {
+      "id": 2,
+      "title": "Gas",
+      "amount": 30,
+      "paymentMethod": "Cash",
+      "category": "Transportation",
+      "description": "Filled up the gas tank",
+      "createdAt": "2023-05-02T15:45:00.000Z"
+    },
+    {
+      "id": 3,
+      "title": "Internet Bill",
+      "amount": 60,
+      "paymentMethod": "Online Transfer",
+      "category": "Utilities",
+      "description": "Monthly internet bill",
+      "createdAt": "2023-05-03T09:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "title": "Eating Out",
+      "amount": 25,
+      "paymentMethod": "Debit Card",
+      "category": "Food",
+      "description": "Dinner with friends",
+      "createdAt": "2023-05-04T20:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "title": "Books",
+      "amount": 40,
+      "paymentMethod": "Credit Card",
+      "category": "Entertainment",
+      "description": "Purchased new books",
+      "createdAt": "2023-05-05T14:15:00.000Z"
+    },
+    {
+      "title": "MM",
+      "amount": "100",
+      "paymentMethod": "Online Payment",
+      "category": "Utilities",
+      "description": "ha,smbncbm zxbjcbjhvsdagljsvdbmxczbjvzcb",
+      "date": "2024-01-01T19:02:01.307Z",
+      "id": 6
+    }
+  ]
+}
