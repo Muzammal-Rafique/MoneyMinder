@@ -1,18 +1,36 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Expense } from "../types";
 
-interface ExpenseModalProps {
+interface ExpenseFormModalProps {
   onClose: () => void;
+  isEditing: boolean;
+  expenseToEdit: Expense | null;
 }
 
-const ExpenseModal: React.FC<ExpenseModalProps> = ({ onClose }) => {
+const ExpenseFormModal: React.FC<ExpenseFormModalProps> = ({
+  onClose,
+  isEditing,
+  expenseToEdit,
+}) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleAddExpense = async () => {
+  useEffect(() => {
+    if (isEditing && expenseToEdit) {
+      // Populate form fields with expense details when editing
+      setTitle(expenseToEdit.title);
+      setAmount(expenseToEdit.amount);
+      setPaymentMethod(expenseToEdit.paymentMethod);
+      setCategory(expenseToEdit.category);
+      setDescription(expenseToEdit.description);
+    }
+  }, [isEditing, expenseToEdit]);
+
+  const handleAddOrUpdateExpense = async () => {
     const currentDate = new Date();
     const formattedDate = currentDate.toISOString();
     const expenseData = {
@@ -21,22 +39,24 @@ const ExpenseModal: React.FC<ExpenseModalProps> = ({ onClose }) => {
       paymentMethod,
       category,
       description,
-      createAt: formattedDate,
+      createdAt: formattedDate,
     };
 
     try {
-      const response = await axios.post(
-        "http://localhost:4000/expenses",
-        expenseData
-      );
-
-      if (response.status === 201) {
-        onClose();
+      if (isEditing && expenseToEdit) {
+        // If editing, update the existing expense
+        await axios.put(
+          `http://localhost:4000/expenses/${expenseToEdit.id}`,
+          expenseData
+        );
       } else {
-        console.error("Failed to add expense.");
+        // If not editing, add a new expense
+        await axios.post("http://localhost:4000/expenses", expenseData);
       }
+
+      onClose();
     } catch (error) {
-      console.error("Error adding expense:", error);
+      console.error("Error adding/updating expense:", error);
     }
   };
 
@@ -53,7 +73,9 @@ const ExpenseModal: React.FC<ExpenseModalProps> = ({ onClose }) => {
         >
           &times;
         </span>
-        <h2 className="text-2xl font-bold mb-4">Add Expense</h2>
+        <h2 className="text-2xl font-bold mb-4">
+          {isEditing ? "Edit Expense" : "Add Expense"}
+        </h2>
 
         <label className="block text-sm font-medium text-gray-700 mb-1">
           Title
@@ -116,14 +138,14 @@ const ExpenseModal: React.FC<ExpenseModalProps> = ({ onClose }) => {
         />
 
         <button
-          onClick={handleAddExpense}
+          onClick={handleAddOrUpdateExpense}
           className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none mt-6"
         >
-          Add Expense
+          {isEditing ? "Update Expense" : "Add Expense"}
         </button>
       </div>
     </div>
   );
 };
 
-export default ExpenseModal;
+export default ExpenseFormModal;

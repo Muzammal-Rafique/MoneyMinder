@@ -24,7 +24,13 @@ export default function Home() {
         Add Expense
       </button>
 
-      {isModalOpen && <ExpenseModal onClose={closeModal} />}
+      {isModalOpen && (
+        <ExpenseModal
+          onClose={closeModal}
+          isEditing={false}
+          expenseToEdit={null}
+        />
+      )}
       <ExpanseList />
     </div>
   );
